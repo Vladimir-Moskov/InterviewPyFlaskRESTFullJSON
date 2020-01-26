@@ -60,3 +60,17 @@ if __name__ == '__main__':
 # cat C:\Users\bobam\PycharmProjects\InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
 # type C:\Users\bobam\PycharmProjects\InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
 
+# import argparse
+
+
+    # parser = argparse.ArgumentParser(description="This is nested dictionary challenge program.")
+    # parser.add_argument("filename", help="filename containing a valid json", type=str)
+    # parser.add_argument("nesting_level_1", help="Specify atleast one nesting level", type=str, nargs='+')
+    # parser.add_argument("-v", "--verbose", help="increase verbosity", action="store_true")
+    # args = parser.parse_args()
+    #
+    # if args.verbose:
+    #     logger.setLevel(logging.DEBUG)
+    #     logger.info("-verbosity turned on")
+    #
+    # logger.info(args.nesting_level_1)
