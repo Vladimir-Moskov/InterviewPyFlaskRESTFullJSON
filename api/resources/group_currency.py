@@ -58,7 +58,8 @@ class GroupCurrencyAPI(Resource):
             parameters = request.args.get('parameters')
             parameters = parameters.split(',')
         except Exception as error:
-            pass
+            parameters = []
+
         result = groupe_currency_dic(GroupCurrencyAPI.iMDB, *parameters)
         # return {'status': 'success', 'data': result}, 200, {'Access-Control-Allow-Origin': '*'}
         return jsonify(result)

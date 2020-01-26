@@ -5,45 +5,35 @@ Created By: Volodymyr Moskov
 
 ##Interview for Python Developer (Data) position in Revolut (Berlin/London)
 
-*Please see task details in Revolut - Python Engineer Data Challenge.pdf (or .txt)
+*Please see task details in file "Revolut - Python Engineer Data Challenge.pdf" (or .txt)
 
 
-### Please see solution for Task 1 in ./group_currency_util/currency_parser
+# Here is solution
+
+### Please see solution for Task 1 in ./group_currency_util/currency_parser.py
 Simple python module which doing the job and can be use as stand alon script to
 run it from command line or can be reused as module in order to parse data for API application
 
-### Please see solution for Task 2 in ./group_currency_util/currency_parser
+### Please see solution for Task 2 in ./api/group_currency_api.py
 Simple API has been made with Flask, simple as it possible
 
 
-*********************************************************************
-
-# Here is solution
-  1. Flask ecosystem has been used to implement task.
-  2. SQLAlchemy and ORM to deal with data model.
-  3. flask_migrate Migrate to manage DB changes(add/update/delete table/field/model)
-  4. web application page mapping in app/routes.
-  5. batch job has been implemented as independent part of the system - here batch/steel_processing_batch.py
+  1. Flask ecosystem has been used to implement REST api task.
+  2. Used in memory DB to store data from POST request.
+  3. base authorization by token has been implemented - as simple as possible
 
 
-## Project repository
-> https://github.com/Vladimir-Moskov/SmartSteelPyFlaskCSV
+## Project source code in InterviewPyRevolut.zip
 
 ## From point of view MVP (Minimum Valuable Product)
 
-1. For simplicity - logging has not been added
-> TODO: add real life logging
-> https://www.scalyr.com/blog/getting-started-quickly-with-flask-logging/
-> https://stackoverflow.com/questions/52728928/setting-up-a-database-handler-for-flask-logger
+1. For simplicity - logging has been added as it was asked
+   "Any debugging or logging information should be printed to stderr"
 
-2. For simplicity - unit tests and integration tests has not been implemented as well
-> TODO: add real life tests with pytest
+2. For simplicity - unit tests and integration tests has been implemented as it was asked
 
-3. For simplicity - there is no any authorization/security
-> TODO: implement it
+3. For simplicity - only base authorization/security has been implemented as it was asked
 
-4. TODO: add flask-serialize
-5. TODO: fix time zone
 
 ## Project setup steps (Windows only)
 
@@ -61,13 +51,13 @@ Simple API has been made with Flask, simple as it possible
    > pip install virtualenv
 
  5. set project folder as you current folder
-    > cd   your_local_folder/SmartSteelPyFlaskCSV
+    > cd   your_local_folder/InterviewPyRevolut
 
  6. Run next command in order to create virtualenv for project
    > virtualenv venv
 
  7. Activate virtual environment
-   > your_local_folder/SmartSteelPyFlaskCSV/venv/Scripts/activate
+   > your_local_folder/InterviewPyRevolut/venv/Scripts/activate
 
  8. install project dependencies
 
@@ -84,56 +74,58 @@ Simple API has been made with Flask, simple as it possible
 
     in case you miss some
 
- 9. You do not need to setup/update DB - it has been added in to repository
-   > Data Base: sql lite in file SmartSteelPyFlaskCSV/app/app.db
-   Here are some commands how to dial with it in case you want to do modifications
-    > flask db init
-
-    > flask db migrate -m "SteelProcessing table"
-
-    > flask db migrate
-
-    > flask db upgrade
-
 
  ## Run instructions
  ### Start data extractor
-    > application that transfers `task_data.csv` to a database
+    > application that group json by field (Task 1)
     1. Here is where application located -
-        > SmartSteelPyFlaskCSV/batch/steel_processing_batch.py
+        > InterviewPyRevolut/group_currency_util/currency_parser.py
 
-     which use given file `task_data.csv` from folder
-      > SmartSteelPyFlaskCSV/resource
-      (this can be adjusted here - SmartSteelPyFlaskCSV/app/config.py)
+     it maybe used with file /resource/currency.json
 
-    2. use command
-        > python SmartSteelPyFlaskCSV/batch/steel_processing_batch.py
-      to run data transfer in to DB
+    2. use command (as it mentioned in task)
+        for Windows
+        > type InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
 
-    3. use clean DB script in case you want to repeat a test
-       > python SmartSteelPyFlaskCSV/batch/clear_all_db.py
+        for Linux
+        cat InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
 
- ### Start web application
-    > web application that is able to connect to this database
+ ### Start REST application (Flask + flask_restful)
+    > Create a REST service from the first task.
 
     1.  Here is where application located -
-        > SmartSteelPyFlaskCSV/app
+        > InterviewPyRevolut/api/group_currency_api.py
 
     2. Run it with
-       >  python SmartSteelPyFlaskCSV/app/smart_steel_technologies.py
+       >  python InterviewPyRevolut/api/group_currency_api.py
 
     3. application will be started on
 
-        > http://localhost:5000/
+        > http://localhost:5001/
 
-        with home page
+        or
 
-        > http://localhost:5000/index
+        >http://127.0.0.1:5001/
 
-    4. To see DB data from file `task_data.csv` use this page
+        API methods:
+            Use token=RevolutAPI for authorization
 
-       > http://localhost:5000/steelProcessing
+            # POST - http://127.0.0.1:5001/api/v1/groupCurrency
+            Save original JSON on the server side (iMDB)
 
-    5. To see log data from DB use this page
+            Simple use
+            > POST - http://127.0.0.1:5001/api/v1/groupCurrency
+            Use with token
+            > POST - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI
 
-       > http://localhost:5000/log
+            #GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI
+
+            Simple use
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI
+
+            Use with token
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPIGET
+
+            Use with arguments
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI&parameters=currency,country,city
+
