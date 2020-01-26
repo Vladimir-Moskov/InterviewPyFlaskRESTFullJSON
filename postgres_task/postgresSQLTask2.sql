@@ -75,11 +75,15 @@ values
 ;
 
 -- ***************** THE SOLUTION 2 **************
+-- pretty mch the same query as in Task 1, but with LATERAL JOIN which make it significantly slower
+-- but it does the job properly
 
 SELECT  trans_tbl.user_id
        ,SUM(trans_tbl.amount * COALESCE(rates_tbl.rate, 1)) as total_spent_gbp
 FROM transactions  trans_tbl
+--  TABLE with transactions joined with currency rates
 LEFT JOIN LATERAL (
+-- sub query with currency rates ordered by timestamp in order to have latest rate for each transaction
    SELECT DISTINCT ON(from_currency, to_currency)
           from_currency
          ,to_currency

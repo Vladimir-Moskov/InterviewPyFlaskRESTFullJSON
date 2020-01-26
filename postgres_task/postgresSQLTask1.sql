@@ -99,6 +99,14 @@ GROUP BY trans_tbl.user_id
 ORDER BY trans_tbl.user_id
 ;
 
+-- Query result
+
+--user_id 	total_spent_gbp
+--  1 	    23.7970
+--  2 	    42.7370
+--  3 	    2
+--  4 	    3.24
+
 --
 -- Executing query with EXPLAIN ANALYZE
 --QUERY PLAN

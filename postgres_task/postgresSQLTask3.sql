@@ -129,12 +129,13 @@ FROM generate_series
 -- I did some attempt to optimize query, but unfortunately had not enough time to finish it
 
 -- EXPLAIN ANALYZE
-EXPLAIN ANALYZE
 SELECT
         summary.user_id
        ,SUM(summary.amount * summary.rate) as total_spent_gbp
 FROM
+-- sub query with currency rates ordered by timestamp in order to have latest rate for each transaction
 (
+--  TABLE with transactions joined with currency rates
     SELECT  DISTINCT ON(trans_tbl.user_id
                         ,trans_tbl.currency
                         ,trans_tbl.amount
@@ -147,6 +148,7 @@ FROM
            ,rates_tbl.ts as time_rate
            ,COALESCE(rates_tbl.rate, 1) as rate
     FROM transactions  trans_tbl
+
     LEFT JOIN exchange_rates rates_tbl ON trans_tbl.currency = rates_tbl.from_currency
     AND rates_tbl.to_currency = 'GBP'
     AND rates_tbl.ts <= trans_tbl.ts
