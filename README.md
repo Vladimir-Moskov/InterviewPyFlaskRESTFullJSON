@@ -10,6 +10,8 @@ Created By: Volodymyr Moskov
 
 # Here is solution
 
+### Please see solution for SQL part in ./postgres_sql_task
+
 ### Please see solution for Task 1 in ./group_currency_util/currency_parser.py
 Simple python module which doing the job and can be use as stand alon script to
 run it from command line or can be reused as module in order to parse data for API application
@@ -76,7 +78,7 @@ Simple API has been made with Flask, simple as it possible
 
 
  ## Run instructions
- ### Start data extractor
+ ### Start json parser
     > application that group json by field (Task 1)
     1. Here is where application located -
         > InterviewPyRevolut/group_currency_util/currency_parser.py

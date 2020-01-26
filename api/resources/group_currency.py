@@ -1,15 +1,20 @@
+"""
+    RestFull Resource - POST/GET request handlers
+"""
+
 from flask_restful import Resource
 from flask import request, jsonify
 import json
 from groupe_currency_util.currency_parser import groupe_currency_dic
 from functools import wraps
 
+# base authorization token - just left it here for validation
 SECRET_TOKEN = "RevolutAPI"
 
 
 def base_auth(func):
     """
-    user request logging decorator
+     api request  base authorization decorator
     :param func: decorated function
     :return: decorator
     """
@@ -17,14 +22,17 @@ def base_auth(func):
     def decorated(*args, **kwargs):
         authorized = False
         try:
+            # check is request has right token on it
             token = request.args.get('token')
             authorized = SECRET_TOKEN == token
-        except:
+        except Exception as error:
             pass
 
         if authorized:
+            # continue normally
             return func(*args, **kwargs)
         else:
+            # return http error - 500
             errors = {
                 'AutorizationError': {
                     'message': "Asses Deny",
