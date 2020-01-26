@@ -1,0 +1,68 @@
+﻿Python Developer (Data) Challenge   
+
+
+You will have 3 days to submit the task. If you need an extension, please email us to explain the situation.
+ 
+The goal of this home task is to assess the candidate’s code style, problem-solving methodology, and command of various skill sets. 
+
+
+All the tasks are simplified real-world examples of what we do at Revolut and are a good illustration of what could be your daily job.        
+
+
+Final submission must be one zip file containing all answers and words.
+
+
+Please do not share this task online, don’t publish it on github or similar.
+ 
+SQL
+
+
+Please see  https://dbfiddle.uk/?rdbms=postgres_9.6&fiddle=6eeee53c62aef4e84720cf4074a81e9a  for database schema.
+
+
+Given the transactions table and table containing exchange rates. Exchange rate timestamps are rounded to second, transaction timestamps are rounded up to the millisecond. We have only data for one day, 1st of April, 2018. Please note there are no exchange rates from GBP to GBP as it is always 1
+
+
+1. Write down a query that gives us a breakdown of spend in GBP by each user. Use the exchange rate with the largest timestamp. 
+2. Write down the same query, but this time, use the latest exchange rate smaller or equal then the transaction timestamp. The solution should have the two columns: user_id, total_spent_gbp, ordered by user_id
+3. Bonus for Postgres superstars: Consider the same schema, but now let’s add some random data, to simulate real scale: https://dbfiddle.uk/?rdbms=postgres_9.6&fiddle=231257838892f0198c58bb5f46fb0d5d Write a solution for the previous task. Please ensure It executes within 5 seconds. 
+(You are allowed to make minor changes in the schema itself like building indexes, creating types, etc.)
+
+
+Readability of sql query will be evaluated as well.
+
+
+ 
+Programming
+The program must have the following:
+1. Full solution written in Python 3.6 or higher
+2. Keep it simple and production quality
+3. If you are using any third-party libraries, a requirements or lock file should be specified
+4. Programs should get input from stdin and print results to stdout.
+5. Any debugging or logging information should be printed to stderr
+6. You can use argparse, to specify parameters. --help should print out usage instructions.
+7. Unit tests are a must. 
+8. The filename specified in the task description
+9. Please avoid using pandas
+
+
+
+
+Task 1:
+
+
+Given an input as json array (each element is a flat dictionary) write a program that will parse this json, and return a nested dictionary of dictionaries of arrays, with keys specified in command line arguments and the leaf values as arrays of flat dictionaries matching appropriate groups
+python nest.py nesting_level_1 nesting_level_2 … nesting_level_n
+Example input for json can be found here:  http://jsonformatter.org/74f158
+For example, when invoked like this:
+cat input.json | python nest.py currency country city
+the output should be in json format and look like this: http://jsonformatter.org/615048
+Please note, that the nesting keys should be stripped out from the dictionaries in the leaves.
+Also please note that the program should support an arbitrary number of arguments, that is arbitrary levels of nesting.
+
+
+Task 2:
+Create a REST service from the first task. Make sure your methods support basic auth. Input json should be received via POST request, nesting parameters should be specified as request parameters.
+
+
+Good luck!
