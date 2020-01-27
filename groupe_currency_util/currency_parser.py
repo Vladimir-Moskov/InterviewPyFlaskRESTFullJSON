@@ -164,6 +164,7 @@ if __name__ == '__main__':
 
         if "--help" in json_fields:
             # print help - "You can use argparse, to specify parameters. --help should print out usage instructions."
+            # docstring should serve user needs
             sys.stdout.write(__doc__)
         else:
             # read array of flat json objects from stdin - as it was asked in task
