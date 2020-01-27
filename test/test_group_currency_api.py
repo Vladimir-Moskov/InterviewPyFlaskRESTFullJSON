@@ -16,6 +16,7 @@ URL = "http://127.0.0.1:5001/api/v1/groupCurrency"
 def post_data():
     data_json = currency_json_to_dic()
     request_self = requests.post(url=URL, json=json.dumps(data_json), params={"token": SECRET_TOKEN})
+    assert request_self.status_code == 201
 
 
 def test_groupcurrency_post_no_token():

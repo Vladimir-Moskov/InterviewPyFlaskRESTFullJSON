@@ -49,17 +49,19 @@ handler.setFormatter(formatter)
 app_root_logger.addHandler(handler)
 
 
-def currency_json_to_dic():
+def currency_json_to_dic(file_name=None):
     """
     Load default JSON data from local file - testing/debugging purposes
 
     :return:  json data object with currency info
     """
+    if not file_name:
+        file_name = currency_json_file_name
     currency_data = None
     try:
         app_root_logger.info(f"Process {__name__} - started.")
         basepath = os.path.dirname(__file__)
-        filepath = os.path.abspath(os.path.join(basepath, currency_json_file_name))
+        filepath = os.path.abspath(os.path.join(basepath, file_name))
         with open(filepath) as json_file:
             currency_data = json.load(json_file)
     except Exception as error:
@@ -101,7 +103,7 @@ def groupe_currency_dic(currency_data_ar, *args):
             # sort array by this field - according provided output, data needs to be sorted
             currency_data_ar.sort(key=lambda currency_data: currency_data[current_key])
             # group all items by the field with itertools groupby
-            groups = groupby(currency_data_ar, lambda currency_data: currency_data[current_key])
+            groups = groupby(currency_data_ar, lambda currency_data: str(currency_data[current_key]))
             # remove fields from all items
             groups_dic = {key: list(map(lambda dic_val: _delete_key(dic_val, current_key), value)) for key, value in groups}
             # continue grouping for the remaining field for every nested object
