@@ -18,10 +18,10 @@
     Example of use:
 
         Windows:
-            > type InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
+            - 'type InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city'
 
         Linux:
-            > cat InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
+            - 'cat InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city'
 
 """
 import logging
@@ -57,13 +57,15 @@ def currency_json_to_dic():
     """
     currency_data = None
     try:
+        app_root_logger.info(f"Process {__name__} - started.")
         basepath = os.path.dirname(__file__)
         filepath = os.path.abspath(os.path.join(basepath, currency_json_file_name))
         with open(filepath) as json_file:
             currency_data = json.load(json_file)
     except Exception as error:
-        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
-
+        app_root_logger.error(f"Exception in {currency_json_to_dic.__name__}", exc_info=True)
+    finally:
+        app_root_logger.info(f"Process {currency_json_to_dic.__name__} - end.")
     return currency_data
 
 
@@ -107,7 +109,7 @@ def groupe_currency_dic(currency_data_ar, *args):
                 groups_dic[key] = groupe_currency_dic(sub_item, *args[1:])
             return groups_dic
     except Exception as error:
-        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
+        app_root_logger.error(f"Exception in {groupe_currency_dic.__name__}", exc_info=True)
 
     return currency_data_ar
 
@@ -122,6 +124,7 @@ def main(json_data, json_fields):
     :return: None, just print result in stdout
     """
     try:
+        app_root_logger.info(f"Process {main.__name__} - started.")
         # no data - read from file
         if not json_data:
             currency_data = currency_json_to_dic()
@@ -138,32 +141,42 @@ def main(json_data, json_fields):
         # print result into stdout
         sys.stdout.write(currency_dic_str)
     except Exception as error:
-        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
-
+        app_root_logger.error(f"Exception in {main,__name__}", exc_info=True)
+    finally:
+        app_root_logger.info(f"Process {main.__name__} - end.")
 
 # for use as stand alon script/program
 if __name__ == '__main__':
     # TODO: add command line args validation and better parser
     try:
+        app_root_logger.info(f"Process {__name__} - started.")
         args = sys.argv
         json_fields = []
+        data = None
         # get list of fields from command line arguments
         if len(args) == 1:
             # debug mod - take default params
-            data = None
-            json_fields = ["currency", "country", "city"]
+            # json_fields = ["currency", "country", "city"]
+            app_root_logger.warning(f"No any arguments has been provided")
         elif len(args) > 1:
             # first arg is script name - just ignore it
             json_fields = args[1:]
+
+        if "--help" in json_fields:
+            # print help - "You can use argparse, to specify parameters. --help should print out usage instructions."
+            sys.stdout.write(__doc__)
+        else:
             # read array of flat json objects from stdin - as it was asked in task
             data = sys.stdin.readlines()
             if isinstance(data, list):
                 # file content from console needs some converting efforts
                  data = "".join(data)
 
-        # run program
-        main(data, json_fields)
+            # run program
+            main(data, json_fields)
     except Exception as error:
         app_root_logger.error(f"Exception in {__name__}", exc_info=True)
+    finally:
+        app_root_logger.info(f"Process {__name__} - end.")
 
 
