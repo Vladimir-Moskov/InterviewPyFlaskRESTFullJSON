@@ -6,6 +6,8 @@
     parameters.'
 
     application endpoint - # http://127.0.0.1:5001/api/v1/groupCurrency
+
+    * there is no logging in api app - flask default logging enough for now
 """
 
 from flask import Flask

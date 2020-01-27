@@ -24,6 +24,7 @@
             > cat InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
 
 """
+import logging
 import json
 from collections import namedtuple
 from itertools import groupby
@@ -35,6 +36,17 @@ currency_json_file_name = "../resource/currency.json"
 
 # this DTO maybe used for json validation
 # currency_dto = namedtuple("CurrencyDTO", "currency, country, city, amount")
+
+
+# setup logger
+app_root_logger = logging.getLogger("InterviewPyRevolut")
+app_root_logger.setLevel(logging.DEBUG)
+
+handler = logging.StreamHandler(sys.stderr)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+app_root_logger.addHandler(handler)
 
 
 def currency_json_to_dic():
@@ -50,7 +62,7 @@ def currency_json_to_dic():
         with open(filepath) as json_file:
             currency_data = json.load(json_file)
     except Exception as error:
-        pass
+        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
 
     return currency_data
 
@@ -79,20 +91,24 @@ def groupe_currency_dic(currency_data_ar, *args):
     :param args: list of fields for grouping
     :return: groped json in requested format
     """
-    # simple validation before start
-    if len(currency_data_ar) > 0 and len(args) > 0:
-        # get first field
-        current_key = args[0]
-        # sort array by this field - according provided output, data needs to be sorted
-        currency_data_ar.sort(key=lambda currency_data: currency_data[current_key])
-        # group all items by the field with itertools groupby
-        groups = groupby(currency_data_ar, lambda currency_data: currency_data[current_key])
-        # remove fields from all items
-        groups_dic = {key: list(map(lambda dic_val: _delete_key(dic_val, current_key), value)) for key, value in groups}
-        # continue grouping for the remaining field for every nested object
-        for key, sub_item in groups_dic.items():
-            groups_dic[key] = groupe_currency_dic(sub_item, *args[1:])
-        return groups_dic
+    try:
+        # simple validation before start
+        if len(currency_data_ar) > 0 and len(args) > 0:
+            # get first field
+            current_key = args[0]
+            # sort array by this field - according provided output, data needs to be sorted
+            currency_data_ar.sort(key=lambda currency_data: currency_data[current_key])
+            # group all items by the field with itertools groupby
+            groups = groupby(currency_data_ar, lambda currency_data: currency_data[current_key])
+            # remove fields from all items
+            groups_dic = {key: list(map(lambda dic_val: _delete_key(dic_val, current_key), value)) for key, value in groups}
+            # continue grouping for the remaining field for every nested object
+            for key, sub_item in groups_dic.items():
+                groups_dic[key] = groupe_currency_dic(sub_item, *args[1:])
+            return groups_dic
+    except Exception as error:
+        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
+
     return currency_data_ar
 
 
@@ -105,65 +121,49 @@ def main(json_data, json_fields):
     :param json_fields:  field to group by
     :return: None, just print result in stdout
     """
-    # no data - read from file
-    if not json_data:
-        currency_data = currency_json_to_dic()
-    # data passed - just use it
-    else:
-        # convert byte array to json str
-        #json_data = json_data[0].decode('utf8').replace("'", '"')
-        currency_data = json.loads(json_data)
-    # get json processing result
-    currency_dic = groupe_currency_dic(currency_data, *json_fields)
+    try:
+        # no data - read from file
+        if not json_data:
+            currency_data = currency_json_to_dic()
+        # data passed - just use it
+        else:
+            # convert byte array to json str
+            #json_data = json_data[0].decode('utf8').replace("'", '"')
+            currency_data = json.loads(json_data)
+        # get json processing result
+        currency_dic = groupe_currency_dic(currency_data, *json_fields)
 
-    # format json beauty
-    currency_dic_str = json.dumps(currency_dic, indent=4, sort_keys=True)
-    # print result into stdout
-    sys.stdout.write(currency_dic_str)
+        # format json beauty
+        currency_dic_str = json.dumps(currency_dic, indent=4, sort_keys=True)
+        # print result into stdout
+        sys.stdout.write(currency_dic_str)
+    except Exception as error:
+        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
 
 
 # for use as stand alon script/program
 if __name__ == '__main__':
-    # TODO: add command line args validation
-    args = sys.argv
-    json_fields = []
-    # get list of fields from command line arguments
-    if len(args) == 1:
-        # debug mod - take default params
-        data = None
-        json_fields = ["currency", "country", "city"]
-    elif len(args) > 1:
-        # first arg is script name - just ignore it
-        json_fields = args[1:]
-        # read array of flat json objects from stdin - as it was asked in task
-        data = sys.stdin.readlines()
-        if isinstance(data, list):
-            # file content from console needs some converting efforts
-             data = "".join(data)
-    #sys.stdout.write(repr(json_fields))
-    #sys.stdout.write(repr("".join(data)))
+    # TODO: add command line args validation and better parser
+    try:
+        args = sys.argv
+        json_fields = []
+        # get list of fields from command line arguments
+        if len(args) == 1:
+            # debug mod - take default params
+            data = None
+            json_fields = ["currency", "country", "city"]
+        elif len(args) > 1:
+            # first arg is script name - just ignore it
+            json_fields = args[1:]
+            # read array of flat json objects from stdin - as it was asked in task
+            data = sys.stdin.readlines()
+            if isinstance(data, list):
+                # file content from console needs some converting efforts
+                 data = "".join(data)
 
-    # run program
-    main(data, json_fields)
-
-
-# C:\Users\bobam\PycharmProjects\InterviewPyRevolut\groupe_currency_util\currency_parser.py
-# C:\Users\bobam\PycharmProjects\InterviewPyRevolut\groupe_currency_util\currency_parser.py
-
-# cat C:\Users\bobam\PycharmProjects\InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
-# type C:\Users\bobam\PycharmProjects\InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
-
-# import argparse
+        # run program
+        main(data, json_fields)
+    except Exception as error:
+        app_root_logger.error(f"Exception in {__name__}", exc_info=True)
 
 
-    # parser = argparse.ArgumentParser(description="This is nested dictionary challenge program.")
-    # parser.add_argument("filename", help="filename containing a valid json", type=str)
-    # parser.add_argument("nesting_level_1", help="Specify atleast one nesting level", type=str, nargs='+')
-    # parser.add_argument("-v", "--verbose", help="increase verbosity", action="store_true")
-    # args = parser.parse_args()
-    #
-    # if args.verbose:
-    #     logger.setLevel(logging.DEBUG)
-    #     logger.info("-verbosity turned on")
-    #
-    # logger.info(args.nesting_level_1)

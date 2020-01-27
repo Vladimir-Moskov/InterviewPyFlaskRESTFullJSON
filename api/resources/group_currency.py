@@ -1,6 +1,9 @@
 """
     RestFull Resource - POST/GET request handlers
+
+    * there is no logging in api app - flask default logging enough for now
 """
+# TODO: handle server errors properly
 
 from flask_restful import Resource
 from flask import request, jsonify
@@ -47,39 +50,45 @@ def base_auth(func):
 class GroupCurrencyAPI(Resource):
     """
           GroupCurrencyAPI interface
+          to POST Json data and GET it grouped by fields
       """
     iMDB = []
 
     @base_auth
-    def get(self, expense_id: int = None):
+    def get(self):
         """
-        Get one Expense item by id
-        :param expense_id:
-        :return: JSON data, response code, header
-        """
+        Get JSON grouped by fields - from url arg parameters, with coma separated fields name
 
-        # query_data = Expense.query_get_all(expense_id)
-        # query_data = Expense.query_get_all_join_employee(expense_id)
-        # result = ExpenseSchema().dump(query_data, many=(expense_id is None))
+        :return: JSON data, with response code
+        """
+        # get args from request - 'nesting parameters should be specified as request'
         parameters = []
         try:
             parameters = request.args.get('parameters')
             parameters = parameters.split(',')
         except Exception as error:
+            # in case of any problem just ignore them - error tolerated behaviour, some time maybe not a good idea,
+            # - just for code tack could be done in this way
             parameters = []
-
+        # process json conversion and return result
         result = groupe_currency_dic(GroupCurrencyAPI.iMDB, *parameters)
-        # return {'status': 'success', 'data': result}, 200, {'Access-Control-Allow-Origin': '*'}
         return jsonify(result)
 
     @base_auth
     def post(self):
         """
-        create new Expense item
-        :return: JSON data, response code, header
+        update iMDB with new data - always override mode
+        :return: response code
        """
-        json_value = request.get_json()
-        data = json.loads(json_value)
-        GroupCurrencyAPI.iMDB = data
-        result = "post"
-        return {'status': 'success', 'data': result}, 201, {'Access-Control-Allow-Origin': '*'}
+        try:
+            # set data into iMDB
+            json_value = request.get_json()
+            data = json.loads(json_value)
+            GroupCurrencyAPI.iMDB = data
+        except Exception as error:
+            # return error in case of any problem
+            result = "iMDB has not been updated with new data."
+            return {'status': 'error', 'data': result, 'error': repr(error)}, 500
+
+        result = "iMDB has been updated with new data."
+        return {'status': 'success', 'data': result}, 201
