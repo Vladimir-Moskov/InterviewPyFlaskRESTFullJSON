@@ -110,7 +110,7 @@ Simple API has been made with Flask, simple as it possible
         >http://127.0.0.1:5001/
 
         API methods:
-            Use token=InterviewPyFlaskRESTFullJSON for authorization
+            Use token=TOKEN_InterviewPyFlaskRESTFullJSON for authorization
 
             # POST - http://127.0.0.1:5001/api/v1/groupCurrency
             Save original JSON on the server side (iMDB)
@@ -118,16 +118,16 @@ Simple API has been made with Flask, simple as it possible
             Simple use
             > POST - http://127.0.0.1:5001/api/v1/groupCurrency
             Use with token
-            > POST - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
+            > POST - http://127.0.0.1:5001/api/v1/groupCurrency?token=TOKEN_InterviewPyFlaskRESTFullJSON
 
-            #GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
+            #GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=TOKEN_InterviewPyFlaskRESTFullJSON
 
             Simple use
-            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=TOKEN_InterviewPyFlaskRESTFullJSON
 
             Use with token
-            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=TOKEN_InterviewPyFlaskRESTFullJSON
 
             Use with arguments
-            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON&parameters=currency,country,city
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=TOKEN_InterviewPyFlaskRESTFullJSON&parameters=currency,country,city
 
