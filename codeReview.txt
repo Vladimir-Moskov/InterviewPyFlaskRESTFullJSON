@@ -2,6 +2,7 @@
 Our reviewers have left the following feedback for you, I hope you find it helpful and fair.
 
 Regarding your nest code, it is extensively documented in the code which is nice.
+
  However we noticed that no error checking is performed on the input. As an example,
   if I repeat twice the same key or repeat twice the same key, the program dump the stack
   trace on stderr and silently still produce some output to the user. Silently processing
