@@ -1,9 +1,9 @@
-# InterviewPyRevolut
+# InterviewPyFlaskRESTFullJSON
 Date: 2020-01-24
 Created By: Volodymyr Moskov
 
 
-##Interview for Python Developer (Data) position in Revolut (Berlin/London)
+##Interview for Python Developer (Data) position in ****lut (Berlin/London)
 
 *Please see task details in file "Python Engineer Data Challenge.pdf" (or .txt)
 
@@ -53,13 +53,13 @@ Simple API has been made with Flask, simple as it possible
    > pip install virtualenv
 
  5. set project folder as you current folder
-    > cd   your_local_folder/InterviewPyRevolut
+    > cd   your_local_folder/InterviewPyFlaskRESTFullJSON
 
  6. Run next command in order to create virtualenv for project
    > virtualenv venv
 
  7. Activate virtual environment
-   > your_local_folder/InterviewPyRevolut/venv/Scripts/activate
+   > your_local_folder/InterviewPyFlaskRESTFullJSON/venv/Scripts/activate
 
  8. install project dependencies
 
@@ -81,25 +81,25 @@ Simple API has been made with Flask, simple as it possible
  ### Start json parser
     > application that group json by field (Task 1)
     1. Here is where application located -
-        > InterviewPyRevolut/group_currency_util/currency_parser.py
+        > InterviewPyFlaskRESTFullJSON/group_currency_util/currency_parser.py
 
      it maybe used with file /resource/currency.json
 
     2. use command (as it mentioned in task)
         for Windows
-        > type InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
+        > type InterviewPyFlaskRESTFullJSON\resource\currency.json | python currency_parser.py currency country city
 
         for Linux
-        cat InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city
+        cat InterviewPyFlaskRESTFullJSON\resource\currency.json | python currency_parser.py currency country city
 
  ### Start REST application (Flask + flask_restful)
     > Create a REST service from the first task.
 
     1.  Here is where application located -
-        > InterviewPyRevolut/api/group_currency_api.py
+        > InterviewPyFlaskRESTFullJSON/api/group_currency_api.py
 
     2. Run it with
-       >  python InterviewPyRevolut/api/group_currency_api.py
+       >  python InterviewPyFlaskRESTFullJSON/api/group_currency_api.py
 
     3. application will be started on
 
@@ -110,7 +110,7 @@ Simple API has been made with Flask, simple as it possible
         >http://127.0.0.1:5001/
 
         API methods:
-            Use token=RevolutAPI for authorization
+            Use token=InterviewPyFlaskRESTFullJSON for authorization
 
             # POST - http://127.0.0.1:5001/api/v1/groupCurrency
             Save original JSON on the server side (iMDB)
@@ -118,16 +118,16 @@ Simple API has been made with Flask, simple as it possible
             Simple use
             > POST - http://127.0.0.1:5001/api/v1/groupCurrency
             Use with token
-            > POST - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI
+            > POST - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
 
-            #GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI
+            #GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
 
             Simple use
-            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
 
             Use with token
-            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPIGET
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON
 
             Use with arguments
-            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=RevolutAPI&parameters=currency,country,city
+            > GET - http://127.0.0.1:5001/api/v1/groupCurrency?token=InterviewPyFlaskRESTFullJSON&parameters=currency,country,city
 

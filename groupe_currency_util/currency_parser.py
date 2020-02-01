@@ -18,10 +18,10 @@
     Example of use:
 
         Windows:
-            - 'type InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city'
+            - 'type InterviewPyFlaskRESTFullJSON\resource\currency.json | python currency_parser.py currency country city'
 
         Linux:
-            - 'cat InterviewPyRevolut\resource\currency.json | python currency_parser.py currency country city'
+            - 'cat InterviewPyFlaskRESTFullJSON\resource\currency.json | python currency_parser.py currency country city'
 
 """
 import logging
@@ -39,7 +39,7 @@ currency_json_file_name = "../resource/currency.json"
 
 
 # setup logger
-app_root_logger = logging.getLogger("InterviewPyRevolut")
+app_root_logger = logging.getLogger("InterviewPyFlaskRESTFullJSON")
 app_root_logger.setLevel(logging.DEBUG)
 
 handler = logging.StreamHandler(sys.stderr)

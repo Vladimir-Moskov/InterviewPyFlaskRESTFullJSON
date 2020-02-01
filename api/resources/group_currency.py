@@ -12,7 +12,7 @@ from groupe_currency_util.currency_parser import groupe_currency_dic
 from functools import wraps
 
 # base authorization token - just left it here for validation
-SECRET_TOKEN = "RevolutAPI"
+SECRET_TOKEN = "InterviewPyFlaskRESTFullJSON"
 
 
 def base_auth(func):
