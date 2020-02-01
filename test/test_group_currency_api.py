@@ -1,6 +1,7 @@
 """
     just a minimal amount of tests - have time shortage
 
+    * btw - run api application first
 """
 
 import pytest
