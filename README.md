@@ -5,7 +5,7 @@ Created By: Volodymyr Moskov
 
 ##Interview for Python Developer (Data) position in Revolut (Berlin/London)
 
-*Please see task details in file "Revolut - Python Engineer Data Challenge.pdf" (or .txt)
+*Please see task details in file "Python Engineer Data Challenge.pdf" (or .txt)
 
 
 # Here is solution
@@ -25,7 +25,7 @@ Simple API has been made with Flask, simple as it possible
   3. base authorization by token has been implemented - as simple as possible
 
 
-## Project source code in InterviewPyRevolut.zip
+## Project source code on github -
 
 ## From point of view MVP (Minimum Valuable Product)
 

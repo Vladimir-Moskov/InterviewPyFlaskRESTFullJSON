@@ -6,7 +6,7 @@ You will have 3 days to submit the task. If you need an extension, please email 
 The goal of this home task is to assess the candidate’s code style, problem-solving methodology, and command of various skill sets. 
 
 
-All the tasks are simplified real-world examples of what we do at Revolut and are a good illustration of what could be your daily job.        
+All the tasks are simplified real-world examples of what we do at ****lut and are a good illustration of what could be your daily job.
 
 
 Final submission must be one zip file containing all answers and words.
