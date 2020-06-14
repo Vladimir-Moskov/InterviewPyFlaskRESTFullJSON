@@ -13,6 +13,7 @@ Moreover, we noticed that you hard-coded paths in your submission code, intended
  Everything related to testing should not appear on your code. This is what tests are used for:
  you should ensure to properly use these to perform all your check without changing your program core logic.
 
+
 Regarding the way your handle arguments, using an external library to assist in the parsing process
  is strongly recommended. This may leverage some complexity, check for errors in input types and make
   future evolution easier. It would also offer you a synopsis and `--help` feature with no extra coding.
@@ -27,15 +28,16 @@ Moreover, you decided to pass the token on the query string, but using the heade
  (if you log the urls) or having issues with cache (depending on use cases).
 
 You should as well take care of how you handle errors, and more especially, the status code returned by your service.
+
 You should use the status code to inform your client of the outcome of the query. As an example,
 all your endpoint return a generic `500` status code whenever an error occurs where a `4xx` family status code would
 be more appropriate
  (see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_errors for more information).
 
-Small note as well, consider removing all cache/junk files is always good.
+*Small note as well, consider removing all cache/junk files is always good.
  These files are not intended to be shared. This is generally a good practice
  to exclude these from versioning, so same should be done when sharing it.
 
-Thank you once again for taking the time to do the task. We hope you enjoyed working
+*Thank you once again for taking the time to do the task. We hope you enjoyed working
  on it and find it interesting, and the feedback provided here is useful and constructive.
 

@@ -30,6 +30,8 @@ from collections import namedtuple
 from itertools import groupby
 import sys
 import os
+import argparse
+from enum import Enum
 
 # test file to have default json data
 currency_json_file_name = "../resource/currency.json"
@@ -147,9 +149,37 @@ def main(json_data, json_fields):
     finally:
         app_root_logger.info(f"Process {main.__name__} - end.")
 
+
+class Operation(Enum):
+    """
+        Supported command line values / operations
+    """
+    ARG_COMMAND_CURRENCY = "currency"
+    ARG_COMMAND_COUNTRY = "country"
+    ARG_COMMAND_CITY = "city"
+
+    def __str__(self) -> str:
+        """
+            Custom string representation of command value
+        :return: command
+        """
+        return self.value
+
+
 # for use as stand alon script/program
 if __name__ == '__main__':
     # TODO: add command line args validation and better parser
+
+
+    # Parse command line args
+    parser = argparse.ArgumentParser(description=f"{__doc__} \n ")
+    # print help - "You can use argparse, to specify parameters. --help should print out usage instructions."
+    # docstring should serve user needs
+    parser.add_argument(Operation.ARG_COMMAND_CITY, type=Operation, choices=list(Operation),
+                        help=f"Supported operation values {list(map(str, Operation))}")
+    args = parser.parse_args()
+    print(args)
+
     try:
         app_root_logger.info(f"Process {__name__} - started.")
         args = sys.argv
@@ -164,16 +194,11 @@ if __name__ == '__main__':
             # first arg is script name - just ignore it
             json_fields = args[1:]
 
-        if "--help" in json_fields:
-            # print help - "You can use argparse, to specify parameters. --help should print out usage instructions."
-            # docstring should serve user needs
-            sys.stdout.write(__doc__)
-        else:
             # read array of flat json objects from stdin - as it was asked in task
             data = sys.stdin.readlines()
             if isinstance(data, list):
                 # file content from console needs some converting efforts
-                 data = "".join(data)
+                data = "".join(data)
 
             # run program
             main(data, json_fields)
@@ -181,5 +206,3 @@ if __name__ == '__main__':
         app_root_logger.error(f"Exception in {__name__}", exc_info=True)
     finally:
         app_root_logger.info(f"Process {__name__} - end.")
-
-

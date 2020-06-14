@@ -1,3 +1,5 @@
+# TODO: add docker file
+# TODO: finish docker-compose
 # InterviewPyFlaskRESTFullJSON
 Date: 2020-01-24
 Created By: Volodymyr Moskov
